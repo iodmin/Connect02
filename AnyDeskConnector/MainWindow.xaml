@@ -1,0 +1,134 @@
+﻿<Window
+    x:Class="AnyDeskConnector.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AnyDeskConnector"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AnyDeskConnector - Remote Access"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="ScladStyle" TargetType="Button">
+            <Setter Property="Background" Value="Green" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkGreen" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="LightSeaGreen" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CompButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Cyan" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="20,15" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Aquamarine" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="DarkBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border
+            Grid.Column="0"
+            Padding="15"
+            Background="White"
+            CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.2" ShadowDepth="3" />
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Style="{StaticResource TextStyle}" Text="СКЛАДЫ" />
+                <ItemsControl x:Name="SkladyPanel">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Click="Sklad_Click"
+                                Content="{Binding}"
+                                Style="{StaticResource ScladStyle}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+        <Rectangle
+            Grid.Column="1"
+            Margin="0,10"
+            Fill="Gray" />
+        <Border
+            Grid.Column="2"
+            Padding="15"
+            Background="White"
+            CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.2" ShadowDepth="3" />
+            </Border.Effect>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock
+                        x:Name="computers"
+                        Style="{StaticResource TextStyle}"
+                        Text="Выберите склад" />
+                    <ItemsControl x:Name="computersKonteiner">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Content="{Binding Name}"
+                                    MouseDoubleClick="Comp_DoubleClick"
+                                    Style="{StaticResource CompButtonStyle}"
+                                    Tag="{Binding Script}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
