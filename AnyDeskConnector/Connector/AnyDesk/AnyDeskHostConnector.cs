@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyDeskConnector.Connector
+namespace AnyDeskConnector.Connector.AnyDesk
 {
     public interface IHostConnector
     {
