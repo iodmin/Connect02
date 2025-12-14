@@ -15,6 +15,9 @@ namespace AnyDeskConnector
         public string Name { get; set; }
         public string Id { get; set; }
         public string Password { get; set; }
+        public string UserName { get; set; }
+
+       public string Protocol { get; set; }
     }
 
     public partial class MainWindow : Window
@@ -94,9 +97,16 @@ namespace AnyDeskConnector
         private void Comp_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             //if (e.ClickCount != 2) return;
+            
             if (sender is not Button btn || btn.DataContext is not Computer comp) return;
+            if (comp.Protocol=="AnyDesk")
+            {
 
-            try
+            }
+            else if (comp.Protocol=="RDP") 
+            {
+            }
+                try
             {
                 var connector = new AnydeskHostConnector(new AnyDeskCredentials(comp.Password));
                 ExecutionWithLogs.Execute(() => connector.Connect(new MyRemoteHost(comp.Id)), "AnyDesk");
